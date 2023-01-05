@@ -1,17 +1,14 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import Loader from './components/Loader';
-import { usePagination } from './hooks/Pagination';
 
 function App() {
-
   const [todo, setTodo] = useState("");  /* Todo Title */
   const [todoId, setTodoId] = useState(null);  /* Todo Id */
   const [listTodo, setListTodo] = useState([]); /* Mapp Todo */
 
   let recordPerPage = 5;
-  const [totalPages, currentPageIndex, displayPage] = usePagination(recordPerPage, listTodo.length);
-
+  const [currentPageIndex, setCurrentPageIndex] = useState(1);
   let createBox = document.getElementById("create-todo");
   let updateBox = document.getElementById("update-todo");
 
@@ -162,8 +159,8 @@ function App() {
                 {
                   (() => {
                     const pageItem = [];
-                    for (let i = 1; i <= totalPages; i++) {
-                      pageItem.push(<li className="p-2 cursor-pointer hover:bg-purple inline-block bg-blue rounded-full w-10 h-10 text-white text-center" key={i} onClick={() => displayPage(i)}>{i}</li>);
+                    for (let i = 1; i <= (listTodo.length / 5); i++) {
+                      pageItem.push(<li className="p-2 cursor-pointer hover:bg-purple inline-block bg-blue rounded-full w-10 h-10 text-white text-center" key={i} onClick={() => setCurrentPageIndex(i)}>{i}</li>);
                     }
                     return pageItem;
                   })()
